@@ -1,0 +1,65 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}建立管理員 - 管理員後台{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1 class="h2">建立管理員</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('admin.index') }}">控制面板</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('admin.user_list') }}">用戶管理</a></li>
+            <li class="breadcrumb-item active" aria-current="page">建立管理員</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">建立新管理員帳號</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.create_admin') }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">用戶名</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">電子郵件</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密碼</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('admin.user_list') }}" class="btn btn-secondary">取消</a>
+                        <button type="submit" class="btn btn-primary">建立管理員</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">說明</h5>
+            </div>
+            <div class="card-body">
+                <p>管理員帳號擁有以下權限：</p>
+                <ul>
+                    <li>訪問管理後台</li>
+                    <li>管理所有用戶資訊</li>
+                    <li>創建和管理其他管理員</li>
+                </ul>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 請謹慎建立管理員帳號，並使用強密碼保護。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

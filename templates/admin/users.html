@@ -1,0 +1,106 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}用戶管理 - 管理員後台{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center">
+    <h1 class="h2">用戶管理</h1>
+    <a href="{{ url_for('admin.create_admin') }}" class="btn btn-primary">
+        <i class="fas fa-user-plus"></i> 建立管理員
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用戶名</th>
+                        <th>電子郵件</th>
+                        <th>角色</th>
+                        <th>註冊時間</th>
+                        <th>上次登入</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users.items %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if user.is_admin %}
+                            <span class="badge bg-primary">管理員</span>
+                            {% else %}
+                            <span class="badge bg-secondary">普通用戶</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            {% if user.last_login %}
+                            {{ user.last_login.strftime('%Y-%m-%d %H:%M') }}
+                            {% else %}
+                            從未登入
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.user_detail', user_id=user.id) }}" class="btn btn-sm btn-info">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{{ url_for('admin.user_edit', user_id=user.id) }}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ user.id }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            
+                            <!-- 刪除確認對話框 -->
+                            <div class="modal fade" id="deleteModal{{ user.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ user.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel{{ user.id }}">確認刪除</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            確定要刪除用戶 <strong>{{ user.username }}</strong> 嗎？此操作無法撤銷。
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                            <form action="{{ url_for('admin.user_delete', user_id=user.id) }}" method="post">
+                                                <button type="submit" class="btn btn-danger">確認刪除</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center">沒有找到用戶</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    {% if users.pages > 1 %}
+    <div class="card-footer">
+        <nav aria-label="用戶列表分頁">
+            <ul class="pagination justify-content-center">
+                {% for page in range(1, users.pages + 1) %}
+                <li class="page-item {% if page == users.page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('admin.user_list', page=page) }}">{{ page }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 服務器錯誤</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .error-code {
+            font-size: 96px;
+            font-weight: bold;
+            color: #6f42c1;
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #343a40;
+        }
+        .error-description {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <div class="error-code">500</div>
+            <div class="error-message">服務器錯誤</div>
+            <div class="error-description">
+                <p>很抱歉，服務器遇到了問題，無法完成您的請求。</p>
+                <p>我們正在努力解決這個問題，請稍後再試。</p>
+            </div>
+            <div>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">返回首頁</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
