@@ -21,7 +21,10 @@ Us_uk="us"
 
 # 配置API                                                                            #README.MD裡有網址
 ngrok.set_auth_token("2pTLpO34I2oLaQ7JQZzXdItaVjg_6dHVsJfvwJsW8CMKJWGmc")     # 替換為你的 ngrok 金鑰!!!!!!!!!!!!
-genai.configure(api_key=GOOGLE_API_KEY)            # 替換為你的 gemini   金鑰!!!!!!!!!  
+api_key = os.environ.get('GOOGLE_API_KEY')
+if not api_key:
+    print("警告: 未設置 GOOGLE_API_KEY 環境變量")
+genai.configure(api_key=api_key)
 
 #選擇模型
 model = genai.GenerativeModel('gemini-1.5-flash')
