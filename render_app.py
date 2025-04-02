@@ -18,7 +18,10 @@ lock = threading.Lock()
 Us_uk = "us"
 
 # 配置API
-genai.configure(api_key='AIzaSyAWsd4l5j35qjTEnag79enNkMdYp64djDY')  # 請在部署時使用環境變量
+api_key = os.environ.get('GOOGLE_API_KEY', '')  # 從環境變量獲取API金鑰
+if not api_key:
+    print("警告: 未設置 GOOGLE_API_KEY 環境變量")
+genai.configure(api_key=api_key)
 
 # 選擇模型
 model = genai.GenerativeModel('gemini-1.5-flash')
