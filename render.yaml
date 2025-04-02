@@ -10,4 +10,6 @@ services:
       - key: FLASK_ENV
         value: production
       - key: SECRET_KEY
-        generateValue: true 
+        generateValue: true
+      - key: GOOGLE_API_KEY
+        sync: false  # 表示這是一個需要手動輸入的秘密值
